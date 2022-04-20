@@ -35,9 +35,13 @@ public class WebView {
   public String getSnapshotInfo() {
     StringBuilder shapeInfo = new StringBuilder();
     for (Map.Entry<LocalDateTime, Snapshot> snapshot : snap.entrySet()) {
+      String description = snapshot.getValue().getDescription();
+      if (description == null) {
+        description = " ";
+      }
       shapeInfo.append("\n<div>\n" +
               "    <h2>" + snapshot.getValue().getID() + "</h2>\n" + "    <h2>"
-              + snapshot.getValue().getDescription() + "</h2>\n" + "    <svg width=\"" + 800
+              + description + "</h2>\n" + "    <svg width=\"" + 800
               + "\" height=\"" + 800 + "\">");
       for (IShape shape : snapshot.getValue().getIShape()) {
         if (shape.getType().equalsIgnoreCase("rectangle")) {

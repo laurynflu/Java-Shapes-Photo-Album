@@ -3,6 +3,7 @@ package album;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class Snapshot implements ISnapShot{
   private LocalDateTime ID;
   private String timestamp;
   private String description;
-  private HashMap<String, IShape> snapshot;
+  private LinkedHashMap<String, IShape> snapshot;
 
   /**
    * Instantiates a new Snapshot.
@@ -25,15 +26,15 @@ public class Snapshot implements ISnapShot{
    * @param description the description for the snapshot
    * @param snapshot    the snapshot hashmap
    */
-  public Snapshot(LocalDateTime ID, String timestamp, String description, HashMap<String,
-          IShape> snapshot){
+  public Snapshot(LocalDateTime ID, String timestamp, String description, LinkedHashMap<String,
+            IShape> snapshot){
     this.snapshot = snapshot;
     this.ID = ID;
     this.timestamp = timestamp;
     this.description = description;
   }
 
-  public Snapshot(LocalDateTime ID, String timestamp, HashMap<String, IShape> snapshot){
+  public Snapshot(LocalDateTime ID, String timestamp, LinkedHashMap<String, IShape> snapshot){
     this.snapshot = snapshot;
     this.ID = ID;
     this.timestamp = timestamp;

@@ -3,6 +3,8 @@ import static org.junit.Assert.assertEquals;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +23,7 @@ public class ISnapShotTest {
   /**
    * The Snapshot.
    */
-  HashMap<String, IShape> snapshot;
+  LinkedHashMap<String, IShape> snapshot;
   /**
    * The Oval.
    */
@@ -48,7 +50,7 @@ public class ISnapShotTest {
    */
   @Before
   public void setUp() {
-    snapshot = new HashMap<>();
+    snapshot = new LinkedHashMap<>();
     point = new Point(3, 4);
     point2 = new Point(10, 22);
     oval = new Oval("Oval", "oval", point, new Color(4, 5, 6), 11,

@@ -1,7 +1,7 @@
 package album;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +21,13 @@ public class ShapeModel {
   /**
    * The Shapes.
    */
-  HashMap<String, IShape> shapes = new HashMap<>();
-  //Set<String> keySet = shapes.keySet();
-  //List<String> listKeys
-  //        = new ArrayList<String>(keySet);
+  LinkedHashMap<String, IShape> shapes = new LinkedHashMap<>();
+  Set<String> keySet = shapes.keySet();
 
   /**
    * The Snapshots.
    */
-  HashMap<LocalDateTime, Snapshot> snapshots = new HashMap<>();
+  LinkedHashMap<LocalDateTime, Snapshot> snapshots = new LinkedHashMap<>();
   /**
    * The Log.
    */
@@ -99,17 +97,17 @@ public class ShapeModel {
    */
 //Get the name of the shape from the hashmap and then modify the shape
   public void move(String name, Point point) {
-    boolean success = false;
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
+    AtomicBoolean success = new AtomicBoolean(false);
+    shapes.entrySet().forEach(entry -> {
       if (entry.getKey().equalsIgnoreCase(name)) {
-        entry.getValue().move(point);
         log.add(entry.getValue().getName() + " moves " + "to " + point.toString() + "\n");
-      }
-        if (!success) {
-          throw new IllegalArgumentException("name is not in hashmap");
-        }
-      }
+        entry.getValue().move(point);
+        success.set(true);
+      }});
+    if (!success.get()) {
+      throw new IllegalArgumentException("name is not in hashmap");
     }
+  }
 
   /**
    * Change color of the shape.
@@ -119,17 +117,17 @@ public class ShapeModel {
    */
 //Get the name of the shape from the hashmap and then modify the shape
   public void changeColor(String name, Color color) throws IllegalArgumentException {
-    boolean success = false;
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
+    AtomicBoolean success = new AtomicBoolean(false);
+    shapes.entrySet().forEach(entry -> {
       if (entry.getKey().equalsIgnoreCase(name)) {
         //add this instance to the log
         log.add(entry.getValue().getName() + " changes from " + entry.getValue().getColor()
                 + " to " + color.toString() + "\n");
         entry.getValue().changeColor(color);
-        success = true;
+        success.set(true);
       }
-    }
-    if (!success) {
+    });
+    if (!success.get()) {
       throw new IllegalArgumentException("name is not in hashmap");
     }
   }
@@ -141,9 +139,9 @@ public class ShapeModel {
    * @throws IllegalArgumentException the illegal argument exception
    */
   public IShape getShape(String name) throws IllegalArgumentException {
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
-      if (entry.getKey().equalsIgnoreCase(name)) {
-        return entry.getValue();
+    for (String key : keySet) {
+      if (key.equalsIgnoreCase(name)) {
+        return shapes.get(key);
       }
     }
     return null;
@@ -160,8 +158,8 @@ public class ShapeModel {
   public void resize(String name, int horizontal, int vertical)
           throws IllegalArgumentException {
     //loop through shapes hashmap to get value and modify shape
-    boolean success = false;
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
+    AtomicBoolean success = new AtomicBoolean(false);
+    shapes.entrySet().forEach(entry -> {
       if (entry.getKey().equalsIgnoreCase(name)) {
         //add this instance to the log
         log.add(entry.getValue().getName() + "changes width from "
@@ -170,10 +168,10 @@ public class ShapeModel {
                 + entry.getValue().getVertical() + " to " + vertical + "\n");
         entry.getValue().resizeHorizontal(horizontal);
         entry.getValue().resizeVertical(vertical);
-        success = true;
+        success.set(true);
       }
-    }
-    if (!success) {
+    });
+    if (!success.get()) {
       throw new IllegalArgumentException("name is not in hashmap");
     }
   }
@@ -184,10 +182,11 @@ public class ShapeModel {
    */
 //Get the name of the shape from the hashmap and then modify the shape
   public void remove(String name) {
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
-      if (entry.getKey().equalsIgnoreCase(name)) {
-        log.add(name + " removed\n");
-        shapes.remove(entry.getKey().equalsIgnoreCase(name));
+    Iterator<Map.Entry<String,IShape>> iter = shapes.entrySet().iterator();
+    while (iter.hasNext()) {
+      Map.Entry<String,IShape> entry = iter.next();
+      if(name.equalsIgnoreCase(entry.getKey())){
+        iter.remove();
       }
     }
   }
@@ -203,10 +202,10 @@ public class ShapeModel {
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     //create snapshot object using shapes list
-    HashMap<String, IShape> copyShape = new HashMap<>();
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
+    LinkedHashMap<String, IShape> copyShape = new LinkedHashMap<>();
+    shapes.entrySet().forEach(entry -> {
       copyShape.put(entry.getKey(), entry.getValue().copy());
-    }
+    });
     Snapshot snapshot = new Snapshot(now, now.format(format), description, copyShape);
     //if statement to prevent duplicate shape placement
     snapshots.put(now, snapshot);
@@ -221,10 +220,10 @@ public class ShapeModel {
     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     //create snapshot object using shapes list
-    HashMap<String, IShape> copyShape = new HashMap<>();
-    for (Map.Entry<String, IShape> entry : shapes.entrySet()) {
+    LinkedHashMap<String, IShape> copyShape = new LinkedHashMap<>();
+    shapes.entrySet().forEach(entry -> {
       copyShape.put(entry.getKey(), entry.getValue().copy());
-    }
+    });
     Snapshot snapshot = new Snapshot(now, now.format(format), copyShape);
     //if statement to prevent duplicate shape placement
     snapshots.put(now, snapshot);
@@ -237,7 +236,7 @@ public class ShapeModel {
    * Gets snapshots.
    * @return the snapshots
    */
-  public HashMap<LocalDateTime, Snapshot> getSnapshots() {
+  public LinkedHashMap<LocalDateTime, Snapshot> getSnapshots() {
     //return hashmap
     return snapshots;
   }
@@ -250,9 +249,9 @@ public class ShapeModel {
     //return all snapshots in the hashmap
     StringBuilder snapshotString = new StringBuilder();
     //loop through hashmap and return value tostring
-    for (Map.Entry<LocalDateTime, Snapshot> set : snapshots.entrySet()) {
-      snapshotString.append(set.getValue().toString());
-    }
+    snapshots.entrySet().forEach(entry -> {
+      snapshotString.append(entry.getValue().toString());
+    });
     return snapshotString.toString();
   }
 
