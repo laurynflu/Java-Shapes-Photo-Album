@@ -12,10 +12,12 @@ import album.ShapeModel;
 import album.Snapshot;
 
 public class WebView {
-  private final HashMap<LocalDateTime, Snapshot> snap;
+  private HashMap<LocalDateTime, Snapshot> snap;
+  private String output;
 
-  public WebView(HashMap<LocalDateTime, Snapshot> snap) {
+  public WebView(HashMap<LocalDateTime, Snapshot> snap, String output) {
     this.snap = snap;
+    this.output = output;
   }
 
   //need to find a way to actually get the Ishape from the snapshots, right now its just the 2
@@ -71,10 +73,9 @@ public class WebView {
   }
 
   public void runIt() {
-    String filename = "./out.html";
     try {
-      FileWriter fileWriter = new FileWriter(filename);
-      WebView view = new WebView(snap);
+      FileWriter fileWriter = new FileWriter(output);
+      WebView view = new WebView(snap,output);
       fileWriter.write(view.buildHeader());
       fileWriter.write(view.getSnapshotInfo());
       fileWriter.write(view.buildFooter());
