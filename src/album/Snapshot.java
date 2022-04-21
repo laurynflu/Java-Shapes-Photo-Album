@@ -52,7 +52,7 @@ public class Snapshot implements ISnapShot{
     return this.description;
   }
 
-  public HashMap<String, IShape> getSnapshot() {
+  public LinkedHashMap<String, IShape> getSnapshot() {
     return this.snapshot;
   }
 

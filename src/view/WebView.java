@@ -2,22 +2,23 @@ package view;
 
 import java.io.FileWriter;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import album.Color;
 import album.IShape;
-import album.Point;
-import album.ShapeModel;
 import album.Snapshot;
 
 public class WebView {
-  private HashMap<LocalDateTime, Snapshot> snap;
+  private int maxWidth;
+  private int maxHeight;
+  private LinkedHashMap<LocalDateTime, Snapshot> snap;
   private String output;
 
-  public WebView(HashMap<LocalDateTime, Snapshot> snap, String output) {
+  public WebView(LinkedHashMap<LocalDateTime, Snapshot> snap, String output, int maxWidth, int maxHeight) {
     this.snap = snap;
     this.output = output;
+    this.maxWidth = maxWidth;
+    this.maxHeight = maxHeight;
   }
 
   //need to find a way to actually get the Ishape from the snapshots, right now its just the 2
@@ -43,8 +44,8 @@ public class WebView {
       }
       shapeInfo.append("\n<div>\n" +
               "    <h2>" + snapshot.getValue().getID() + "</h2>\n" + "    <h2>"
-              + description + "</h2>\n" + "    <svg width=\"" + 800
-              + "\" height=\"" + 800 + "\">");
+              + description + "</h2>\n" + "    <svg width=\"" + maxWidth
+              + "\" height=\"" + maxHeight + "\">");
       for (IShape shape : snapshot.getValue().getIShape()) {
         if (shape.getType().equalsIgnoreCase("rectangle")) {
           shapeInfo.append("\n        <rect id=\""
@@ -75,7 +76,7 @@ public class WebView {
   public void runIt() {
     try {
       FileWriter fileWriter = new FileWriter(output);
-      WebView view = new WebView(snap,output);
+      WebView view = new WebView(snap,output, maxWidth, maxHeight);
       fileWriter.write(view.buildHeader());
       fileWriter.write(view.getSnapshotInfo());
       fileWriter.write(view.buildFooter());

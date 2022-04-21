@@ -26,7 +26,7 @@ public class Color {
    * Gets r value.
    * @return the r
    */
-  public double getR() {
+  public int getR() {
     return r;
   }
 
@@ -34,7 +34,7 @@ public class Color {
    * Gets b value.
    * @return the b
    */
-  public double getB() {
+  public int getB() {
     return b;
   }
 
@@ -42,7 +42,7 @@ public class Color {
    * Gets g value.
    * @return the g
    */
-  public double getG() {
+  public int getG() {
     return g;
   }
 

@@ -15,15 +15,15 @@ import view.WebView;
 
 public class WebController {
 
-  private double maxWidth;
-  private double maxHeight;
+  private int maxWidth;
+  private int maxHeight;
   private String output;
   private File inputFile;
   private LinkedHashMap<String, Snapshot> snapshot;
   ShapeModel model = new ShapeModel();
 
   public WebController(File inputFile, String output,
-                       int maxHeight, int maxWidth) {
+                       int maxWidth, int maxHeight) {
     this.inputFile = inputFile;
     this.output = output;
     this.maxHeight = maxHeight;
@@ -81,7 +81,8 @@ public class WebController {
         model.remove(array[1]);
       }
     }
-    WebView webView = new WebView(model.getSnapshots(), output);
+    System.out.println(model.getDescription());
+    WebView webView = new WebView(model.getSnapshots(), output, maxWidth, maxHeight);
     webView.runIt();
   }
 }
