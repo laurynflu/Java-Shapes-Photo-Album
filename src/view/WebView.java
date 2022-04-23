@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import album.IShape;
+import album.ISnapShot;
 import album.Snapshot;
 
 public class WebView {

@@ -81,7 +81,6 @@ public class WebController {
         model.remove(array[1]);
       }
     }
-    System.out.println(model.getDescription());
     WebView webView = new WebView(model.getSnapshots(), output, maxWidth, maxHeight);
     webView.runIt();
   }

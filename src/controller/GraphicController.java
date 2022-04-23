@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -26,7 +25,6 @@ public class GraphicController {
   public void go(ShapeModel model) throws FileNotFoundException {
     this.model = model;
     // pass the path to the file as a parameter
-    System.out.println(this.inputFile);
     Scanner sc = new Scanner(this.inputFile);
 
     while (sc.hasNextLine()) {
@@ -75,7 +73,6 @@ public class GraphicController {
         model.remove(array[1]);
       }
     }
-    //System.out.println(model.getDescription());
-    GraphicalView graphicalView = new GraphicalView(model.getSnapshots(), maxWidth, maxHeight);
+    new GraphicalView(model.getSnapshots(), maxWidth, maxHeight);
   }
 }
