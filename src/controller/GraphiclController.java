@@ -1,49 +1,43 @@
 package controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-import album.*;
 import album.Color;
+import album.IShapeModel;
 import album.Point;
-import view.WebView;
+import album.ShapeModel;
+import view.GraphicalView;
 
 /**
- * The type Web i controller.
+ * The type Graphic i controller.
  */
-public class WebController implements IController {
-
+public class GraphiclController implements IController {
   private int maxWidth;
   private int maxHeight;
-  private String output;
   private File inputFile;
-  private LinkedHashMap<String, ISnapShot> snapshot;
   /**
    * The Model.
    */
-  IShapeModel model = (IShapeModel) new ShapeModel();
+  IShapeModel model = new ShapeModel();
 
   /**
-   * Instantiates a new Web i controller.
+   * Instantiates a new Graphic i controller.
    *
    * @param inputFile the input file
-   * @param output    the output
-   * @param maxWidth  the max width
    * @param maxHeight the max height
+   * @param maxWidth  the max width
    */
-  public WebController(File inputFile, String output,
-                       int maxWidth, int maxHeight) {
+  public GraphiclController(File inputFile, int maxHeight, int maxWidth) {
     this.inputFile = inputFile;
-    this.output = output;
     this.maxHeight = maxHeight;
     this.maxWidth = maxWidth;
   }
 
-  @Override
-  public void go(IShapeModel model) throws IOException {
+  //File not found exception to cover case where there is no file to place in my scanner
+  public void go(IShapeModel model) throws FileNotFoundException {
     this.model = model;
     // pass the path to the file as a parameter
     Scanner sc = new Scanner(this.inputFile);
@@ -105,7 +99,6 @@ public class WebController implements IController {
         model.remove(array[1]);
       }
     }
-    WebView webView = new WebView(model.getSnapshots(), output, maxWidth, maxHeight);
-    webView.runIt();
+    new GraphicalView(model.getSnapshots(), maxWidth, maxHeight);
   }
 }

@@ -10,6 +10,7 @@ public class Point {
 
   /**
    * Instantiates a new Point.
+   *
    * @param x the x
    * @param y the y
    */
@@ -20,6 +21,7 @@ public class Point {
 
   /**
    * Gets y.
+   *
    * @return the y
    */
   public int getY() {
@@ -28,12 +30,18 @@ public class Point {
 
   /**
    * Gets x.
+   *
    * @return the x
    */
   public int getX() {
     return this.x;
   }
 
+  /**
+   * Gets string representation
+   *
+   * @return the string representation
+   */
   public String toString() {
     return "(" + getX() + "," + getY() + ")";
   }

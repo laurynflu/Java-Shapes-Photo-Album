@@ -1,18 +1,27 @@
 import java.io.File;
-import java.io.IOException;
 
+import album.IShapeModel;
 import album.ShapeModel;
-import controller.GraphicController;
+import controller.GraphiclController;
 import controller.WebController;
 
+/**
+ * The type Photo album main.
+ */
 public class PhotoAlbumMain {
-  public static void main(String [] args) throws IOException {
+  /**
+   * The entry point of application.
+   *
+   * @param args the input arguments
+   * @throws Exception the exception
+   */
+  public static void main(String [] args) throws Exception {
     File inFile = null;
     String output = null;
     String type = null;
     int maxWidth = 1000;
     int maxHeight = 1000;
-    ShapeModel model = new ShapeModel();
+    IShapeModel model = new ShapeModel();
 
     for (int i = 0; i<args.length; i++) {
       if (args[i].equalsIgnoreCase("-in")) {
@@ -38,7 +47,7 @@ public class PhotoAlbumMain {
       WebController web = new WebController(inFile, output, maxWidth, maxHeight);
       web.go(model);
     } else if (type.equalsIgnoreCase("graphical")) {
-      GraphicController graph = new GraphicController(inFile, maxWidth, maxHeight);
+      GraphiclController graph = new GraphiclController(inFile, maxWidth, maxHeight);
       graph.go(model);
     }
   }

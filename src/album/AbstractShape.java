@@ -15,16 +15,15 @@ public abstract class AbstractShape implements IShape {
 
   /**
    * Instantiates a new Abstract shape.
+   *
    * @param name       the name of the shape
    * @param type       the type of shape
    * @param point      the point of the shape
    * @param color      the color of the shape
    * @param horizontal the horizontal of the shape
    * @param vertical   the vertical of the shape
-   * @throws IllegalArgumentException the illegal argument exception for when the name or string
-   *    is empty or null
+   * @throws IllegalArgumentException the illegal argument exception for when the name or string    is empty or null
    */
-  //Horizontal and vertical to represent the width/height and radiusX and radiusY
   public AbstractShape(String name, String type, Point point, Color color, int horizontal,
                        int vertical) throws IllegalArgumentException {
     if (Objects.equals(name, "") || name == null || Objects.equals(type, "")

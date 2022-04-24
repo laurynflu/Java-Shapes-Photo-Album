@@ -12,6 +12,7 @@ public class Color {
 
   /**
    * Instantiates a new Color object.
+   *
    * @param r the r
    * @param g the g
    * @param b the b
@@ -24,6 +25,7 @@ public class Color {
 
   /**
    * Gets r value.
+   *
    * @return the r
    */
   public int getR() {
@@ -32,6 +34,7 @@ public class Color {
 
   /**
    * Gets b value.
+   *
    * @return the b
    */
   public int getB() {
@@ -40,12 +43,18 @@ public class Color {
 
   /**
    * Gets g value.
+   *
    * @return the g
    */
   public int getG() {
     return g;
   }
 
+  /**
+   * Gets string representation
+   *
+   * @return the string representation
+   */
   public String toString() {
     return "(" + r + "," + g + "," + b + ")";
   }

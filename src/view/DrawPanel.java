@@ -3,14 +3,23 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.Color;
+import java.time.chrono.IsoChronology;
 
 import album.IShape;
-import album.Snapshot;
+import album.ISnapShot;
 
+/**
+ * The type Draw panel.
+ */
 public class DrawPanel extends JPanel {
-  private Snapshot snapshot;
+  private ISnapShot snapshot;
 
-  public DrawPanel(Snapshot snapshot) {
+  /**
+   * Instantiates a new Draw panel.
+   *
+   * @param snapshot the snapshot
+   */
+  public DrawPanel(ISnapShot snapshot) {
     super(true);
     this.snapshot = snapshot;
 

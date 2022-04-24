@@ -9,12 +9,23 @@ import album.IShape;
 import album.ISnapShot;
 import album.Snapshot;
 
+/**
+ * The type Web view.
+ */
 public class WebView {
   private int maxWidth;
   private int maxHeight;
   private LinkedHashMap<LocalDateTime, Snapshot> snap;
   private String output;
 
+  /**
+   * Instantiates a new Web view.
+   *
+   * @param snap      the snap
+   * @param output    the output
+   * @param maxWidth  the max width
+   * @param maxHeight the max height
+   */
   public WebView(LinkedHashMap<LocalDateTime, Snapshot> snap, String output, int maxWidth, int maxHeight) {
     this.snap = snap;
     this.output = output;
@@ -25,6 +36,11 @@ public class WebView {
   //need to find a way to actually get the Ishape from the snapshots, right now its just the 2
   // string of those shapes
 
+  /**
+   * Build header string.
+   *
+   * @return the string
+   */
   public String buildHeader() {
     StringBuilder header = new StringBuilder();
     header.append("<!DOCTYPE html>\n" +
@@ -34,7 +50,12 @@ public class WebView {
     return header.toString();
   }
 
-  //method that takes in the snapshot information
+  /**
+   * Gets snapshot info.
+   *
+   * @return the snapshot info
+   */
+//method that takes in the snapshot information
   //can i take in this information and append to the string builder all at once
   public String getSnapshotInfo() {
     StringBuilder shapeInfo = new StringBuilder();
@@ -68,12 +89,20 @@ public class WebView {
     return shapeInfo.toString();
   }
 
+  /**
+   * Build footer string.
+   *
+   * @return the string
+   */
   public String buildFooter() {
     StringBuilder footer = new StringBuilder();
     footer.append("</body>\n" + "</html>");
     return footer.toString();
   }
 
+  /**
+   * Run it.
+   */
   public void runIt() {
     try {
       FileWriter fileWriter = new FileWriter(output);

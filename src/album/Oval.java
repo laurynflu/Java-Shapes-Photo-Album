@@ -9,6 +9,7 @@ public class Oval extends AbstractShape {
 
   /**
    * Instantiates a new Oval.
+   *
    * @param name       the name of the oval
    * @param type       the type of the oval
    * @param center     the center of the oval

@@ -11,14 +11,18 @@ import java.util.Objects;
 
 import javax.swing.*;
 
+import album.ISnapShot;
 import album.Snapshot;
 
+/**
+ * The type Graphical view.
+ */
 public class GraphicalView extends JFrame {
   private final int maxWidth;
   private final int maxHeight;
   private final LinkedHashMap<LocalDateTime, Snapshot> snapshots;
   private final ArrayList<String> snapID = new ArrayList<>();
-  private final List<Snapshot> snaps = new ArrayList<>();
+  private final List<ISnapShot> snaps = new ArrayList<>();
   private DrawPanel drawPanel;
   private final JFrame frame;
   private int counter = 0;
@@ -30,6 +34,13 @@ public class GraphicalView extends JFrame {
   //iterate through list based on IDs and find the snapshot that matches the ID
   //Use 2 hashmaps, 1 matches ID to number and 1 matches ID to snapshot
 
+  /**
+   * Instantiates a new Graphical view.
+   *
+   * @param snapshots the snapshots
+   * @param maxWidth  the max width
+   * @param maxHeight the max height
+   */
   public GraphicalView(LinkedHashMap<LocalDateTime, Snapshot> snapshots, int maxWidth, int maxHeight) {
     super();
     frame = this;
@@ -41,11 +52,10 @@ public class GraphicalView extends JFrame {
     this.setTitle("CS5004 Shapes Photo Album");
     //snapshots.values().toArray();
 
-    for (Snapshot id : this.snapshots.values()) {
+    for (ISnapShot id : this.snapshots.values()) {
       snapID.add(id.getID().toString());
       snaps.add(id);
     }
-    //snaps.addAll(this.snapshots.values());
     options = snapID.toArray(new String[0]);
     JPanel btnPanel = new JPanel();
     introPanel = new JPanel();
@@ -68,6 +78,8 @@ public class GraphicalView extends JFrame {
     btnPanel.add(select);
     btnPanel.add(next);
     btnPanel.add(quit);
+    btnPanel.setBackground(Color.ORANGE);
+    introPanel.setBackground(Color.PINK);
     introPanel.add(id, BorderLayout.NORTH);
     introPanel.add(description, BorderLayout.SOUTH);
     add(introPanel, BorderLayout.PAGE_START);
@@ -78,12 +90,13 @@ public class GraphicalView extends JFrame {
   }
 
   private void updateLabel() {
-    id = new JLabel(snaps.get(counter).getID().toString());
-    description = new JLabel(snaps.get(counter).getDescription());
+    id.setText(snaps.get(counter).getID().toString());
+    if (snaps.get(counter).getDescription() != null) {
+      description.setText(snaps.get(counter).getDescription());
+    }
     introPanel.add(id, BorderLayout.NORTH);
     introPanel.add(description, BorderLayout.SOUTH);
     setVisible(true);
-
   }
 
   private void displaySnapshots() {
@@ -91,21 +104,20 @@ public class GraphicalView extends JFrame {
     add(drawPanel, BorderLayout.CENTER);
     drawPanel.setVisible(true);
     setVisible(true);
-
   }
 
   private class SelectionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
       String s = (String) JOptionPane.showInputDialog(frame,
-              "Please selection a snapshot from the following",
+              "Please selection a snapshot from the following snapshots",
               "Snapshots", JOptionPane.INFORMATION_MESSAGE,
               null, options, snapID.get(0));
       for (int i = 0; i < snaps.size(); i++) {
         if (Objects.equals(s, snapID.get(i))) {
           counter = i;
-          displaySnapshots();
           updateLabel();
+          displaySnapshots();
         }
       }
     }
@@ -117,12 +129,12 @@ public class GraphicalView extends JFrame {
       if (counter == snaps.size()) {
         JOptionPane.showMessageDialog(frame, "You have reached the end of the album",
                 "End of the Album", JOptionPane.WARNING_MESSAGE);
-        counter = snaps.size();
-        displaySnapshots();
+        counter = snaps.size()-1;
         updateLabel();
+        displaySnapshots();
       }
-      displaySnapshots();
       updateLabel();
+      displaySnapshots();
     }
   }
   private class PreviousListener implements ActionListener {
@@ -133,11 +145,13 @@ public class GraphicalView extends JFrame {
         JOptionPane.showMessageDialog(frame, "You have reached the first snapshot",
                 "Beginning of the Album", JOptionPane.WARNING_MESSAGE);
         counter = 0;
-        displaySnapshots();
         updateLabel();
+        displaySnapshots();
       }
-      displaySnapshots();
       updateLabel();
+      displaySnapshots();
     }
   }
 }
+
+

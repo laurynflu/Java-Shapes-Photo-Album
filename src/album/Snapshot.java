@@ -21,6 +21,7 @@ public class Snapshot implements ISnapShot{
 
   /**
    * Instantiates a new Snapshot.
+   *
    * @param ID          the id for the snapshot
    * @param timestamp   the timestamp for the snapshot
    * @param description the description for the snapshot
@@ -34,6 +35,13 @@ public class Snapshot implements ISnapShot{
     this.description = description;
   }
 
+  /**
+   * Instantiates a new Snapshot.
+   *
+   * @param ID        the id
+   * @param timestamp the timestamp
+   * @param snapshot  the snapshot
+   */
   public Snapshot(LocalDateTime ID, String timestamp, LinkedHashMap<String, IShape> snapshot){
     this.snapshot = snapshot;
     this.ID = ID;

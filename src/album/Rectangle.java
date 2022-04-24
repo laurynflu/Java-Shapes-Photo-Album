@@ -9,6 +9,7 @@ public class Rectangle extends AbstractShape {
 
   /**
    * Instantiates a new Rectangle.
+   *
    * @param name       the name of the rectangle
    * @param type       the type of the rectangle
    * @param minCorner  the min corner of the rectangle
